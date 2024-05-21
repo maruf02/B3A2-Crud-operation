@@ -8,4 +8,5 @@ router.post('/products', ProductController.createProduct)
 router.get('/products', ProductController.getAllProducts)
 router.get('/products/:productId', ProductController.getProductById)
 router.put('/products/:productId', ProductController.updateProductById)
+router.delete('/products/:productId', ProductController.deleteProductById)
 export const ProductRoutes = router

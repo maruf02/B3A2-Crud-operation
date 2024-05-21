@@ -3,8 +3,10 @@ import { ProductServices } from './product.service'
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const { product: productData } = req.body
-    const result = await ProductServices.createProductIntoDB(productData)
+    // const { product: productData } = req.body
+    // const result = await ProductServices.createProductIntoDB(productData)
+    const product = req.body
+    const result = await ProductServices.createProductIntoDB(product)
     res.status(200).json({
       success: true,
       message: 'Product create successfully',
@@ -25,7 +27,7 @@ const getAllProducts = async (req: Request, res: Response) => {
     ////////////////////
     res.status(200).json({
       success: true,
-      message: 'Products fetched successfully!',
+      message: `Products matching search term '${searchTerm}' fetched successfully!`,
       data: products,
     })
   } catch (err) {
@@ -90,9 +92,35 @@ const updateProductById = async (req: Request, res: Response) => {
   }
 }
 
+const deleteProductById = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params
+    const result = await ProductServices.deleteProductByIdFromDB(productId)
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Product deleted successfully',
+        data: result,
+      })
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      })
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    })
+  }
+}
+
 export const ProductController = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProductById,
+  deleteProductById,
 }
