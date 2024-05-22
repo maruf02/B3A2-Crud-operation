@@ -33,6 +33,24 @@ const createOrderIntoDB = async (order: Order) => {
   return result
 }
 
+const getAllOrdersFromDB = async (email?: string) => {
+  let query = {}
+  if (email) {
+    query = {
+      $or: [
+        { email: { $regex: email, $options: 'i' } },
+        // { description: { $regex: searchTerm, $options: 'i' } },
+        // { category: { $regex: searchTerm, $options: 'i' } },
+      ],
+    }
+  }
+  const products = await OrderModel.find(query)
+  // const products = await OrderModel.find()
+  ////////////////////
+  return products
+}
+
 export const OrderServices = {
   createOrderIntoDB,
+  getAllOrdersFromDB,
 }

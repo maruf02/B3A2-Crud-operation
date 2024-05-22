@@ -32,6 +32,28 @@ const createProduct = async (req: Request, res: Response) => {
     }
   }
 }
+
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    // const products = await OrderServices.getAllOrdersFromDB()
+    const email = req.query.email as string
+    const orders = await OrderServices.getAllOrdersFromDB(email)
+    ////////////////////
+    res.status(200).json({
+      success: true,
+      message: `order matching search term ${email}fetched successfully!`,
+      data: orders,
+    })
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    })
+  }
+}
+
 export const OrderController = {
   createProduct,
+  getAllOrders,
 }
