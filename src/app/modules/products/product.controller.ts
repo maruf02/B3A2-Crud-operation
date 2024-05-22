@@ -57,6 +57,7 @@ const getProductById = async (req: Request, res: Response) => {
     if (product) {
       res.status(200).json({
         success: true,
+        message: 'Product fetched successfully!',
         data: product,
       })
     } else {
@@ -111,7 +112,7 @@ const deleteProductById = async (req: Request, res: Response) => {
       res.status(200).json({
         success: true,
         message: 'Product deleted successfully',
-        data: result,
+        data: null,
       })
     } else {
       res.status(404).json({

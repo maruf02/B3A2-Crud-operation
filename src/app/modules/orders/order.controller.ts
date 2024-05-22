@@ -44,7 +44,7 @@ const getAllOrders = async (req: Request, res: Response) => {
     if (email) {
       res.status(200).json({
         success: true,
-        message: `order matching search term '${email}' fetched successfully!`,
+        message: 'Orders fetched successfully for user email!',
         data: orders,
       })
     } else {
