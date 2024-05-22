@@ -1,12 +1,14 @@
 import { Request, Response } from 'express'
 import { OrderServices } from './order.service'
+import { orderValidationSchema } from './order.validation'
 
 const createProduct = async (req: Request, res: Response) => {
   try {
     // const { product: productData } = req.body
     // const result = await ProductServices.createProductIntoDB(productData)
     const order = req.body
-    const result = await OrderServices.createOrderIntoDB(order)
+    const zodParseDataOrder = orderValidationSchema.parse(order)
+    const result = await OrderServices.createOrderIntoDB(zodParseDataOrder)
     res.status(200).json({
       success: true,
       message: 'Product create successfully',
