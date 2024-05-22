@@ -25,13 +25,21 @@ const getAllProducts = async (req: Request, res: Response) => {
     const searchTerm = req.query.searchTerm as string
     const products = await ProductServices.getAllProductsFromDB(searchTerm)
     ////////////////////
-    res.status(200).json({
-      success: true,
-      message: `Products matching search term '${searchTerm}' fetched successfully!`,
-      data: products,
-    })
+    if (searchTerm) {
+      res.status(200).json({
+        success: true,
+        message: `Products matching search term '${searchTerm}' fetched successfully!`,
+        data: products,
+      })
+    } else {
+      res.status(200).json({
+        success: true,
+        message: `Product fetched successfully!`,
+        data: products,
+      })
+    }
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',
@@ -55,7 +63,7 @@ const getProductById = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',
@@ -84,7 +92,7 @@ const updateProductById = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',
@@ -109,7 +117,7 @@ const deleteProductById = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',

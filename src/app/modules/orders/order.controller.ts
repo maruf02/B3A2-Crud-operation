@@ -12,14 +12,13 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Product create successfully',
       data: result,
     })
-  } catch (err: any) {
-    console.log(err)
-    if (err.message === 'ProductNotFound') {
+  } catch (error: any) {
+    if (error.message === 'ProductNotFound') {
       res.status(400).json({
         success: false,
         message: 'Product not found',
       })
-    } else if (err.message === 'InsufficientQuantity') {
+    } else if (error.message === 'InsufficientQuantity') {
       res.status(400).json({
         success: false,
         message: 'Insufficient quantity available in inventory',
@@ -39,13 +38,22 @@ const getAllOrders = async (req: Request, res: Response) => {
     const email = req.query.email as string
     const orders = await OrderServices.getAllOrdersFromDB(email)
     ////////////////////
-    res.status(200).json({
-      success: true,
-      message: `order matching search term ${email}fetched successfully!`,
-      data: orders,
-    })
+
+    if (email) {
+      res.status(200).json({
+        success: true,
+        message: `order matching search term '${email}' fetched successfully!`,
+        data: orders,
+      })
+    } else {
+      res.status(200).json({
+        success: true,
+        message: `order fetched successfully!`,
+        data: orders,
+      })
+    }
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     res.status(500).json({
       success: false,
       message: 'Internal Server Error',

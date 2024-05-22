@@ -20,7 +20,7 @@ const createOrderIntoDB = async (order: Order) => {
   }
 
   const remainingQuantity = product.inventory.quantity - order.quantity
-  console.log(remainingQuantity)
+  // console.log(remainingQuantity)
 
   const inStock = remainingQuantity > 0
 

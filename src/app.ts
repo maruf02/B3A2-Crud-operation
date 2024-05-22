@@ -3,7 +3,7 @@ import cors from 'cors'
 import { ProductRoutes } from './app/modules/products/product.route'
 import { OrderRoutes } from './app/modules/orders/order.route'
 const app: Application = express()
-const port = 3000
+// const port = 3000
 
 //parser
 app.use(express.json())
